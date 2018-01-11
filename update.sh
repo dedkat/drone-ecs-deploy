@@ -10,6 +10,11 @@ if [ -z ${PLUGIN_IMAGE_NAME} ]; then
   exit 1
 fi
 
+if [ -z ${PLUGIN_TAG} ]; then
+  echo "missing tag"
+  exit 1
+fi
+
 if [ -z ${PLUGIN_SERVICE} ]; then
   echo "missing Service"
   exit 1
@@ -39,4 +44,4 @@ if [ ! -z ${PLUGIN_AWS_SECRET_ACCESS_KEY} ]; then
   AWS_SECRET_ACCESS_KEY=$PLUGIN_AWS_SECRET_ACCESS_KEY
 fi
 
-ecs-deploy --region ${PLUGIN_AWS_REGION} --cluster ${PLUGIN_CLUSTER} -to ${PLUGIN_TAG_ONLY} --service-name ${PLUGIN_SERVICE} --timeout ${PLUGIN_TIMEOUT} --min ${PLUGIN_MIN} --max ${PLUGIN_MAX}
+ecs-deploy --region ${PLUGIN_AWS_REGION} --cluster ${PLUGIN_CLUSTER} -to ${PLUGIN_TAG} -i ${PLUGIN_IMAGE_NAME} --service-name ${PLUGIN_SERVICE} --timeout ${PLUGIN_TIMEOUT} --min ${PLUGIN_MIN} --max ${PLUGIN_MAX}
